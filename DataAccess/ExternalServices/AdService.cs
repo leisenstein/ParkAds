@@ -11,7 +11,7 @@ namespace DataAccess.ExternalServices
 {
     public class AdService
     {
-        public async Task<IEnumerable<Ad>> Get()
+        public async Task<Ad> Get()
         {
             HttpClient httpClient = new HttpClient();
             httpClient.BaseAddress = new Uri("http://dm.sof60.dk:81/");
@@ -21,7 +21,7 @@ namespace DataAccess.ExternalServices
             HttpResponseMessage httpResponseMessage = await httpClient.GetAsync("api/ad").ConfigureAwait(false);
             var jsonResponse = await httpResponseMessage.Content.ReadAsStringAsync().ConfigureAwait(false);
 
-            return JsonConvert.DeserializeObject<IEnumerable<Ad>>(jsonResponse);
+            return JsonConvert.DeserializeObject<Ad>(jsonResponse);
         }
     }
 }
