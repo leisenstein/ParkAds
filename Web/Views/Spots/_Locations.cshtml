@@ -1,0 +1,33 @@
+﻿@model Web.Models.SpotsViewModel
+
+@foreach (var spot in Model.spots)
+{
+    <div class="map" id="map-@spot.Name" data-longitude="@spot.Longitude" data-latitude="@spot.Latitude" style="width:300px;height:200px"></div>
+    <label>@spot.Name</label>
+    <label>Free spots: @spot.FreeSpots</label>
+    <br />
+    <button class="btn btn-primary">Book</button>
+}
+
+<script>
+    function initMap() {
+        var maps = document.getElementsByClassName("map");
+
+        for (var i = 0; i < maps.length; i++) {
+            var uluru = { lat: parseFloat(maps[i].getAttribute("data-latitude").replace(/,/, '.')), lng: parseFloat(maps[i].getAttribute("data-longitude").replace(/,/, '.')) };
+            
+            var map = new google.maps.Map(document.getElementById(maps[i].id), {
+                zoom: 14,
+                center: uluru
+            });
+
+            var marker = new google.maps.Marker({
+                position: uluru,
+                map: map
+            });
+        }
+    }
+</script>
+<script async defer
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC4uGkEFOeg_oy_pVJ5-c9m1CYEkzuUEEw&callback=initMap">
+</script>
