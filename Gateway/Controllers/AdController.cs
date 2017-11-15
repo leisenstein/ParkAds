@@ -4,22 +4,22 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using MicroServices.Services;
 using DataTransferObjects;
 using Gateway.Mapping;
-using MicroServices.Services;
 
 namespace Gateway.Controllers
 {
     [Produces("application/json")]
-    [Route("api/spot")]
-    public class SpotController : Controller
+    [Route("api/ad")]
+    public class AdController : Controller
     {
-        private SpotMicroService spotMicroService = new SpotMicroService();
+        private AdMicroService adMicroService = new AdMicroService();
 
         [HttpGet]
-        public async Task<IEnumerable<SpotDTO>> GetAsync()
+        public AdDTO Get()
         {
-            return SpotMapping.MapDomainToDTOCollection(await spotMicroService.GetAllAsync());
+            return AdMapping.MapDomainToDTOObject(adMicroService.Get());
         }
     }
 }
