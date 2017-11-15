@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using System.Net.Http;
@@ -26,8 +25,15 @@ namespace Web.Controllers
 
             SpotsViewModel viewModel = new SpotsViewModel();
             viewModel.spots = JsonConvert.DeserializeObject<IEnumerable<SpotDTO>>(response);
+            viewModel.ad = await GetAdd();
 
             return View(viewModel);
+        }
+
+        private async Task<AdDTO> GetAdd()
+        {
+            AdController adController = new AdController();
+            return await adController.Ad().ConfigureAwait(false);
         }
     }
 }
