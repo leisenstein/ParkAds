@@ -9,5 +9,6 @@ namespace Web.Models
     public class SpotsViewModel
     {
         public IEnumerable<SpotDTO> spots { get; set; }
+        public AdDTO ad { get; set; }
     }
 }
