@@ -7,12 +7,14 @@ using System.Net.Http.Headers;
 using DataTransferObjects;
 using Web.Models;
 using Newtonsoft.Json;
+using System.Text;
 
 namespace Web.Controllers
 {
+    [Route("spots")]
     public class SpotsController : Controller
     {
-        [Route("spots")]
+        [Route("")]
         public async Task<IActionResult> Spots()
         {
             HttpClient httpClient = new HttpClient();
@@ -34,6 +36,26 @@ namespace Web.Controllers
         {
             AdController adController = new AdController();
             return await adController.Ad().ConfigureAwait(false);
+        }
+        
+        [Route("reservation")]
+        public async Task<IActionResult> Book()
+        {
+            HttpClient httpClient = new HttpClient();
+            httpClient.BaseAddress = new Uri("http://localhost:1914/");
+            httpClient.DefaultRequestHeaders.Accept.Add(
+                new MediaTypeWithQualityHeaderValue("application/json"));
+
+            ReservationDTO reservationDTO = new ReservationDTO();
+            reservationDTO.DateTime = DateTime.Now;
+
+            string json = JsonConvert.SerializeObject(reservationDTO);
+            var content = new StringContent(json, Encoding.UTF8, "application/json");
+
+            HttpResponseMessage httpResponseMessage = await httpClient.PostAsync("api/reservation", content);
+            var response = await httpResponseMessage.Content.ReadAsStringAsync();
+
+            return RedirectToAction("Spots", "Spots");
         }
     }
 }
