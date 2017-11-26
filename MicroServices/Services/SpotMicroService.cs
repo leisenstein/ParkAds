@@ -10,9 +10,9 @@ namespace MicroServices.Services
     public class SpotMicroService
     {
         private SpotService spotService = new SpotService();
-        public IEnumerable<Spot> GetAll()
+        public async Task<IEnumerable<Spot>> GetAllAsync()
         {
-            return spotService.GetAll().Result;
+            return await spotService.GetAll();
         }
     }
 }

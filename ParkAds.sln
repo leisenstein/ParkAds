@@ -13,7 +13,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DataTransferObjects", "Data
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Domain", "Domain\Domain.csproj", "{EA4C4DBC-D206-40E1-A213-727DB1DED289}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Web", "ParkAds\Web.csproj", "{1320272E-D782-42EA-80E7-704308F64F6D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Web", "Web\Web.csproj", "{3069FFB0-7DAB-48EB-BDE1-2F427265E604}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -41,10 +41,10 @@ Global
 		{EA4C4DBC-D206-40E1-A213-727DB1DED289}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EA4C4DBC-D206-40E1-A213-727DB1DED289}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{EA4C4DBC-D206-40E1-A213-727DB1DED289}.Release|Any CPU.Build.0 = Release|Any CPU
-		{1320272E-D782-42EA-80E7-704308F64F6D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{1320272E-D782-42EA-80E7-704308F64F6D}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{1320272E-D782-42EA-80E7-704308F64F6D}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{1320272E-D782-42EA-80E7-704308F64F6D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3069FFB0-7DAB-48EB-BDE1-2F427265E604}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3069FFB0-7DAB-48EB-BDE1-2F427265E604}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3069FFB0-7DAB-48EB-BDE1-2F427265E604}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3069FFB0-7DAB-48EB-BDE1-2F427265E604}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
