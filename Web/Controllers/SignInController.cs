@@ -17,10 +17,17 @@ namespace Web.Controllers
     [Route("signin")]
     public class SignInController : Controller
     {
+        private SessionController sessionController;
+
         [Route("")]
         [HttpGet]
         public ActionResult SignIn()
         {
+            sessionController = new SessionController(HttpContext);
+
+            if (sessionController.IsLoggedIn())
+                return RedirectToAction("Spots", "Spots");
+
             return View();
         }
 
@@ -48,6 +55,8 @@ namespace Web.Controllers
                     case 412:
                         return RedirectToAction("SignIn", "SignIn", new { responseMessage = "An user with this email has alredy exists!" });
                     case 200:
+                        sessionController = new SessionController(HttpContext);
+                        sessionController.CreateUserSession(userDTO);
                         return RedirectToAction("Spots", "Spots");
                     default:
                         return RedirectToAction("SignIn", "SignIn", new { responseMessage = "" });
