@@ -10,8 +10,14 @@ namespace Web.Controllers
 {
     public class HomeController : Controller
     {
+        private SessionController sessionController;
         public IActionResult Index()
         {
+            sessionController = new SessionController(HttpContext);
+
+            if (sessionController.IsLoggedIn())
+                return RedirectToAction("Spots", "Spots");
+
             return View();
         }
     }

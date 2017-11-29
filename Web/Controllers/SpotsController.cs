@@ -14,9 +14,14 @@ namespace Web.Controllers
     [Route("spots")]
     public class SpotsController : Controller
     {
+        private SessionController sessionController;
         [Route("")]
         public async Task<IActionResult> Spots()
         {
+            sessionController = new SessionController(HttpContext);
+            if (!sessionController.IsLoggedIn())
+                return RedirectToAction("Index", "Home");
+
             HttpClient httpClient = new HttpClient();
             httpClient.BaseAddress = new Uri("http://localhost:1914/");
             httpClient.DefaultRequestHeaders.Accept.Add(
