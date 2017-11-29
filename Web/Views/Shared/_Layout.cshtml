@@ -1,4 +1,9 @@
-﻿<!DOCTYPE html>
+﻿@using Microsoft.AspNetCore.Http;
+@using Newtonsoft.Json;
+@using Newtonsoft.Json.Linq;
+@using System.Text;
+
+<!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8" />
@@ -30,8 +35,25 @@
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    <li><a asp-area="" asp-controller="SignIn" asp-action="SignIn">Sign in</a></li>
-                    <li><a asp-area="" asp-controller="LogIn" asp-action="LogIn">Log in</a></li>
+                    @{
+                        if (Context.Session.GetString("User") == null)
+                        {
+                            <li><a asp-area="" asp-controller="SignIn" asp-action="SignIn">Sign in</a></li>
+                            <li><a asp-area="" asp-controller="LogIn" asp-action="LogIn">Log in</a></li>
+                        }
+                        else
+                        {
+                            var toBytes = Convert.FromBase64String(Context.Session.GetString("User"));
+                            string json = Encoding.UTF8.GetString(toBytes);
+                            var user = (JObject)JsonConvert.DeserializeObject(json);
+
+                            StringBuilder name = new StringBuilder();
+                            name.Append(user["FirstName"].Value<string>());
+                            name.Append(" ");
+                            name.Append(user["LastName"].Value<string>());
+                            <li><a asp-area="" asp-controller="#" asp-action="#">@name</a></li>
+                        }
+                    }
                 </ul>
             </div>
         </div>
