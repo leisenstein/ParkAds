@@ -47,7 +47,6 @@ namespace Web.Controllers
                 var content = new StringContent(json, Encoding.UTF8, "application/json");
 
                 HttpResponseMessage httpResponseMessage = await httpClient.PostAsync("api/user", content);
-                var response = await httpResponseMessage.Content.ReadAsStringAsync();
 
                 int statusCode = (int)httpResponseMessage.StatusCode;
                 switch (statusCode)
@@ -55,8 +54,12 @@ namespace Web.Controllers
                     case 412:
                         return RedirectToAction("SignIn", "SignIn", new { responseMessage = "An user with this email has alredy exists!" });
                     case 200:
+                        string jsonResponse = await httpResponseMessage.Content.ReadAsStringAsync();
+                        UserDTO signedUser = JsonConvert.DeserializeObject<UserDTO>(jsonResponse);
+
                         sessionController = new SessionController(HttpContext);
-                        sessionController.CreateUserSession(userDTO);
+                        sessionController.CreateUserSession(signedUser);
+
                         return RedirectToAction("Spots", "Spots");
                     default:
                         return RedirectToAction("SignIn", "SignIn", new { responseMessage = "" });
