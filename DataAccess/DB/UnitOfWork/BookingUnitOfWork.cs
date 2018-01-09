@@ -1,20 +1,20 @@
 ﻿using DataAccess.DB.Contexts;
-using DataAccess.DB.Repository;
 using DataAccess.DB.Interfaces;
+using DataAccess.DB.Repository;
 
 namespace DataAccess.DB.UnitOfWork
 {
-    public class UserUnitOfWork : IUnitOfWork<IUserRepository>
+    public class BookingUnitOfWork : IUnitOfWork<IBookingRepository>
     {
-        private readonly UserContext context;
+        private readonly BookingContext context;
 
-        public UserUnitOfWork(UserContext context)
+        public BookingUnitOfWork(BookingContext context)
         {
             this.context = context;
-            Repository = new UserRepository(this.context);
+            Repository = new BookingRepository(this.context);
         }
 
-        public IUserRepository Repository { get; private set; }
+        public IBookingRepository Repository { get; private set; }
 
         public int Complete()
         {

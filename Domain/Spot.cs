@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Text;
 
 namespace Domain
 {
     public class Spot
     {
+        [Key]
         public string name { get; set; }
         public string is_open { get; set; }
         public string is_payment_active { get; set; }

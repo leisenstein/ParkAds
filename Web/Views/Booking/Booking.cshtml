@@ -1,0 +1,47 @@
+﻿@using Web.Models
+@using System.Text
+
+@model BookingViewModel
+
+@{
+    ViewData["Title"] = "Booking";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Booking</h2>
+<hr />
+@{
+    var toBytes = Encoding.UTF8.GetBytes(Json.Serialize(Model).ToString());
+    string booking = Convert.ToBase64String(toBytes);
+}
+
+@using (Html.BeginForm("Pay", "Payment", new { booking = booking }, FormMethod.Post))
+{
+    @Html.LabelFor(model => model.Id, new { htmlAttributes = new { @class = "form-control" } })
+    @Html.DisplayFor(model => model.Id, new { htmlAttributes = new { @class = "form-control" } })
+    <br />
+    @Html.Label("", "Spot name", new { htmlAttributes = new { @class = "form-control" } })
+    @Html.DisplayFor(model => model.SpotDTO.Name, new { htmlAttributes = new { @class = "form-control" } })
+    <br />
+    @Html.Label("", "First Name", new { htmlAttributes = new { @class = "form-control" } })
+    @Html.DisplayFor(model => model.UserDTO.FirstName, new { htmlAttributes = new { @class = "form-control" } })
+    <br />
+    @Html.Label("", "Last Name", new { htmlAttributes = new { @class = "form-control" } })
+    @Html.DisplayFor(model => model.UserDTO.LastName, new { htmlAttributes = new { @class = "form-control" } })
+    <br />
+    @Html.Label("", "Email", new { htmlAttributes = new { @class = "form-control" } })
+    @Html.DisplayFor(model => model.UserDTO.Email, new { htmlAttributes = new { @class = "form-control" } })
+    <br />
+    @Html.LabelFor(model => model.DateTime, new { htmlAttributes = new { @class = "form-control" } })
+    @Html.DisplayFor(model => model.DateTime, new { htmlAttributes = new { @class = "form-control" } })
+    <br />
+    @Html.LabelFor(model => model.IsPayed, new { htmlAttributes = new { @class = "form-control" } })
+    @(Model.IsPayed ? "Yes" : "No")
+    @if (Model.IsPayed == false)
+    {
+        <div class="form-group">
+            <input type="submit" value="Pay" class="btn btn-default" />
+        </div>
+    }
+}
+

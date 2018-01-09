@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace DataAccess.Migrations
 {
-    public partial class createUserDBMigration : Migration
+    public partial class Initial : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {

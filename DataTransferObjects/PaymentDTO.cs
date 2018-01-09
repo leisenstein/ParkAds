@@ -4,10 +4,11 @@ using System.Text;
 
 namespace DataTransferObjects
 {
-    public class ReservationDTO
+    public class PaymentDTO
     {
+        public int Id { get; set; }
         public DateTime DateTime { get; set; }
-        //public UserDTO UserDTO { get; set; }
-
+        public double Price { get; set; }
+        public BookingDTO BookingDTO { get; set; }
     }
 }

@@ -11,8 +11,8 @@ using System;
 namespace DataAccess.Migrations
 {
     [DbContext(typeof(UserContext))]
-    [Migration("20171114141930_createUserDBMigration")]
-    partial class createUserDBMigration
+    [Migration("20171204131029_Initial")]
+    partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -21,7 +21,7 @@ namespace DataAccess.Migrations
                 .HasAnnotation("ProductVersion", "2.0.0-rtm-26452")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-            modelBuilder.Entity("DataAccess.Model.User", b =>
+            modelBuilder.Entity("Domain.User", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();

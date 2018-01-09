@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace DataTransferObjects
+﻿namespace DataTransferObjects
 {
     public class UserDTO
     {

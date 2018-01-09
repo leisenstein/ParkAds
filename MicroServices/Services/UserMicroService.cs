@@ -11,34 +11,34 @@ namespace DataAccess
         private UserUnitOfWork userUnitOfWork = new UserUnitOfWork(new UserContext());
         public IEnumerable<User> GetAll()
         {
-            return userUnitOfWork.Users.GetAll();
+            return userUnitOfWork.Repository.GetAll();
         }
 
         public User GetById(int id)
         {
-            return userUnitOfWork.Users.Get(id);
+            return userUnitOfWork.Repository.Get(id);
         }
 
         public User GetByEmail(string email)
         {
-            return userUnitOfWork.Users.Find(user => user.Email.Equals(email)).FirstOrDefault();
+            return userUnitOfWork.Repository.Find(user => user.Email.Equals(email)).FirstOrDefault();
         }
 
         public IEnumerable<User> GetByFirstName(string firstName)
         {
-            return userUnitOfWork.Users.Find(user => user.FirstName.StartsWith(firstName));
+            return userUnitOfWork.Repository.Find(user => user.FirstName.StartsWith(firstName));
         }
 
         public IEnumerable<User> GetByLastName(string lastName)
         {
-            return userUnitOfWork.Users.Find(user => user.LastName.StartsWith(lastName));
+            return userUnitOfWork.Repository.Find(user => user.LastName.StartsWith(lastName));
         }
 
         public bool Add(User user)
         {
             if(GetByEmail(user.Email) == null)
             {
-                userUnitOfWork.Users.Add(user);
+                userUnitOfWork.Repository.Add(user);
                 return userUnitOfWork.Complete() > 0;
             }
 
