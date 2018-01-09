@@ -2,8 +2,7 @@
 
 namespace DataAccess.DB.Interfaces
 {
-    public interface IUserRepository : IRepository<User>
+    public interface IBookingRepository : IRepository<Booking>
     {
-
     }
 }

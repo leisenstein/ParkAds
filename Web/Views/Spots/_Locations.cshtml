@@ -1,12 +1,27 @@
-﻿@model Web.Models.SpotsViewModel
+﻿@using Web.Models
+@using System.Text
 
-@foreach (var spot in Model.spots)
+@model SpotsViewModel
+
+@foreach(var spot in Model.Spots)
 {
-    <div class="map" id="map-@spot.Name" data-longitude="@spot.Longitude" data-latitude="@spot.Latitude" style="width:300px;height:200px"></div>
-    <label>@spot.Name</label>
-    <label>Free spots: @spot.FreeSpots</label>
-    <br />
-    <a asp-area="" asp-controller="Spots" asp-action="Book" class="btn btn-primary">Book</a>
+    var toBytes = Encoding.UTF8.GetBytes(Json.Serialize(spot).ToString());
+    string spotJson = Convert.ToBase64String(toBytes);
+
+    using (Html.BeginForm("Book", "Booking", new { spot = spotJson }, FormMethod.Post))
+    {
+        <div class="map" id="map-@spot.Name" data-longitude="@spot.Longitude" data-latitude="@spot.Latitude" style="width:300px;height:200px">
+        </div>
+        @Html.LabelFor(model => spot.Name, new { htmlAttributes = new { @class = "form-control" } })
+        @Html.DisplayFor(model => spot.Name, new { htmlAttributes = new { @class = "form-control" } })
+        <br />
+        @Html.LabelFor(model => spot.FreeSpots, new { htmlAttributes = new { @class = "form-control" } })
+        @Html.DisplayFor(model => spot.FreeSpots, new { htmlAttributes = new { @class = "form-control" } })
+        <br />
+        <div class="form-group">
+            <input type="submit" value="Book" class="btn btn-default" />
+        </div>
+    }
 }
 
 <script>
@@ -15,7 +30,7 @@
 
         for (var i = 0; i < maps.length; i++) {
             var uluru = { lat: parseFloat(maps[i].getAttribute("data-latitude").replace(/,/, '.')), lng: parseFloat(maps[i].getAttribute("data-longitude").replace(/,/, '.')) };
-            
+
             var map = new google.maps.Map(document.getElementById(maps[i].id), {
                 zoom: 14,
                 center: uluru

@@ -25,7 +25,13 @@ namespace Web.Controllers
             if (sessionController.IsLoggedIn())
                 return RedirectToAction("Spots", "Spots");
 
-            return View();
+            LogInViewModel logInViewModel = new LogInViewModel
+            {
+                Email = "gkaravasilev@gmail.com",
+                Password = "asdfg123"
+            };
+
+            return View(logInViewModel);
         }
 
         [Route("")]
