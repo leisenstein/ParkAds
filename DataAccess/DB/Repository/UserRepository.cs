@@ -1,5 +1,5 @@
-﻿using DataAccess.Interfaces;
-using DataAccess.DB.Contexts;
+﻿using DataAccess.DB.Contexts;
+using DataAccess.DB.Interfaces;
 using Domain;
 
 namespace DataAccess.DB.Repository

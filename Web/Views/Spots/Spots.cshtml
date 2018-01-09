@@ -9,21 +9,9 @@
 }
 <h2>Parking Spots</h2>
 <hr />
-<div class="btn-group">
-    <a href="#" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-        Choose city
-        <span class="caret"></span>
-    </a>
-    <ul class="dropdown-menu">
-        <li>@Html.ActionLink("Aalborg", "ByCity", "Spots", new { city = "aalborg" }, null)</li>
-        <li>@Html.ActionLink("Copenhagen", "ByCity", "Spots", new { city = "copenhagen" }, null)</li>
-        <li>@Html.ActionLink("Odense", "ByCity", "Spots", new { city = "odense" }, null)</li>
-        <li>@Html.ActionLink("Aarhus", "ByCity", "Spots", new { city = "aarhus" }, null)</li>
-    </ul>
-</div>
 <div class="row">
     @{
-        var base64imageString = Model.ad.AdEncoding;
+        var base64imageString = Model.Ad.AdEncoding;
         var imgSrc = string.Format("data:image/gif;base64,{0}", base64imageString);
         <img src="@imgSrc" />
     }

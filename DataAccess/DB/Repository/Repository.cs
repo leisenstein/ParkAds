@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
-using DataAccess.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using System.Linq;
+using DataAccess.DB.Interfaces;
 
 namespace DataAccess.DB.Repository
 {
@@ -15,7 +15,7 @@ namespace DataAccess.DB.Repository
         {
             Context = context;
         }
-        public void Add(TEntity entity)
+        public virtual void Add(TEntity entity)
         {
             Context.Set<TEntity>().Add(entity);
         }
@@ -30,7 +30,7 @@ namespace DataAccess.DB.Repository
             return Context.Set<TEntity>().Where(predicate);
         }
 
-        public TEntity Get(int id)
+        public virtual TEntity Get(int id)
         {
             return Context.Set<TEntity>().Find(id);
         }
@@ -40,7 +40,7 @@ namespace DataAccess.DB.Repository
             return Context.Set<TEntity>().ToList();
         }
 
-        public void Update(TEntity entity)
+        public virtual void Update(TEntity entity)
         {
             Context.Set<TEntity>().Update(entity);
         }

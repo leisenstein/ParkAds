@@ -31,8 +31,8 @@ namespace Web.Controllers
             var response = await httpResponseMessage.Content.ReadAsStringAsync();
 
             SpotsViewModel viewModel = new SpotsViewModel();
-            viewModel.spots = JsonConvert.DeserializeObject<IEnumerable<SpotDTO>>(response);
-            viewModel.ad = await GetAdd();
+            viewModel.Spots = JsonConvert.DeserializeObject<IList<SpotDTO>>(response);
+            viewModel.Ad = await GetAdd();
 
             return View(viewModel);
         }
@@ -41,26 +41,6 @@ namespace Web.Controllers
         {
             AdController adController = new AdController();
             return await adController.Ad().ConfigureAwait(false);
-        }
-        
-        [Route("reservation")]
-        public async Task<IActionResult> Book()
-        {
-            HttpClient httpClient = new HttpClient();
-            httpClient.BaseAddress = new Uri("http://localhost:1914/");
-            httpClient.DefaultRequestHeaders.Accept.Add(
-                new MediaTypeWithQualityHeaderValue("application/json"));
-
-            ReservationDTO reservationDTO = new ReservationDTO();
-            reservationDTO.DateTime = DateTime.Now;
-
-            string json = JsonConvert.SerializeObject(reservationDTO);
-            var content = new StringContent(json, Encoding.UTF8, "application/json");
-
-            HttpResponseMessage httpResponseMessage = await httpClient.PostAsync("api/reservation", content);
-            var response = await httpResponseMessage.Content.ReadAsStringAsync();
-
-            return RedirectToAction("Spots", "Spots");
         }
     }
 }

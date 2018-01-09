@@ -7,6 +7,8 @@ using Microsoft.AspNetCore.Mvc;
 using MicroServices.Services;
 using Newtonsoft.Json;
 using DataTransferObjects;
+using Domain;
+using Gateway.Mapping;
 
 namespace Gateway.Controllers
 {
@@ -17,21 +19,28 @@ namespace Gateway.Controllers
         private ReservationEnrichmentService reservationEnrichmentService = new ReservationEnrichmentService();
         // POST: api/reservation
         [HttpPost]
-        public ContentResult Post([FromBody] ReservationDTO reservationDTO)
+        public ContentResult Post([FromBody] object reservationDTO)
         {
-            //User user = UserMapping.MapDTOToDomainObject(reservationDTO);
-            reservationEnrichmentService.CreateReservation();
-            return new ContentResult()
-            {
-                Content = "reservation",
-                ContentType = "text/plain",
-                StatusCode = 200
-            };
-            //else
-            //    return new ContentResult()
-            //    {
-            //        StatusCode = 412
-            //    };
+            object reservation = ReservationMapping.MapDTOToDomainObject(reservationDTO);
+            if (reservationEnrichmentService.Add(reservation))
+                return new ContentResult()
+                {
+                    Content = JsonConvert.SerializeObject(ReservationMapping.MapDomainToDTOObject(reservation)),
+                    ContentType = "application/json",
+                    StatusCode = 200
+                };
+            else
+                return new ContentResult()
+                {
+                    StatusCode = 412
+                };
+        }
+
+        [HttpGet]
+        [Route("id/{id}")]
+        public object Get(string id)
+        {
+            return ReservationMapping.MapDomainToDTOObject(reservationEnrichmentService.Get(id));
         }
     }
 }

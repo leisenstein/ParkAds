@@ -2,11 +2,12 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace DataAccess.Interfaces
+namespace DataAccess.DB.Interfaces
 {
-    public interface IUserUnitOfWork : IDisposable
+    public interface IUnitOfWork<TRepository> : IDisposable where TRepository : class
     {
-        IUserRepository Users { get; }
+        TRepository Repository { get; }
         int Complete();
+        void Dispose();
     }
 }
