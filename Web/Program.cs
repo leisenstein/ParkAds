@@ -19,7 +19,7 @@ namespace Web
                .UseContentRoot(Directory.GetCurrentDirectory())
                .UseIISIntegration()
                .UseStartup<Startup>()
-               .UseUrls("http://localhost:5001/")
+               .UseUrls("http://localhost:5012/")
                .Build();
 
             host.Run();

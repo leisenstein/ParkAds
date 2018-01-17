@@ -22,7 +22,7 @@ namespace Web.Controllers
         public async Task<IActionResult> Pay(string booking)
         {
             HttpClient httpClient = new HttpClient();
-            httpClient.BaseAddress = new Uri("http://localhost:1914/");
+            httpClient.BaseAddress = new Uri("http://localhost:5011/");
             httpClient.DefaultRequestHeaders.Accept.Add(
                 new MediaTypeWithQualityHeaderValue("application/json"));
 

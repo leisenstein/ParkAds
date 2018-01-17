@@ -9,7 +9,7 @@ using Domain;
 namespace Gateway.Controllers
 {
     [Produces("application/json")]
-    [Route("api/user")]
+    [Route("api/user/")]
     public class UserController : Controller
     {
         private UserMicroService userMicroService = new UserMicroService();
