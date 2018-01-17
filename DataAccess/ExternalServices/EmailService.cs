@@ -4,6 +4,9 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using Domain;
+using System.IO;
+using System.Net.Mail;
+using System.Net.Mime;
 
 namespace DataAccess.ExternalServices
 {
@@ -12,7 +15,7 @@ namespace DataAccess.ExternalServices
         public static IRestResponse SendSimpleMessage(Ad ad, Object obj)
         {
             string base64imageString = ad.ImageData;
-            byte[] img = Convert.FromBase64String(base64imageString);
+            //byte[] img = Convert.FromBase64String(base64imageString);
             var imgSrc = string.Format("data:image/gif;base64,{0}", base64imageString);
 
             if (obj.GetType().ToString().Equals("Domain.Payment"))
@@ -28,12 +31,14 @@ namespace DataAccess.ExternalServices
                 request.AddParameter("domain", "sandbox4efa56cba19f43c3b1096d2281b57d0c.mailgun.org", ParameterType.UrlSegment);
                 request.Resource = "{domain}/messages";
                 request.AddParameter("from", "Mailgun Sandbox <postmaster@sandbox4efa56cba19f43c3b1096d2281b57d0c.mailgun.org>");
-                request.AddParameter("to", "Georgi <teodorstoqnov111@gmail.com>");
+                request.AddParameter("to", "Georgi <iwanmanew@yahoo.com>");
                 request.AddParameter("subject", "Payment");
                 request.AddParameter("text", "Congratulations Georgi, you just sent an email with Mailgun!  You are truly awesome!");
-                request.AddParameter("html", "<h1>Georgi<h1>");
-               
-                request.AddBody("<html>Inline image here: <img src=data:image/jpg;base64," + imgSrc + "></html>");
+                request.AddParameter("html", "<h1>test<h1>");
+                request.AddParameter("html", String.Format("Inline image here: <img src=\"data:image/png;base64,{0}\" />", base64imageString));
+
+                 
+                 
                 request.Method = Method.POST;
                 return client.Execute(request);
             }

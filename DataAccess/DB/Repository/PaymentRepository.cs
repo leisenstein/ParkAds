@@ -16,7 +16,7 @@ namespace DataAccess.DB.Repository
         public override void Add(Payment entity)
         {
             context.Entry(entity.Booking.User).State = EntityState.Unchanged;
-            context.Entry(entity.Booking.Spot).State = EntityState.Added;
+            context.Entry(entity.Booking.Spot).State = EntityState.Unchanged;
             base.Add(entity);
         }
 

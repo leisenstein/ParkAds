@@ -18,7 +18,6 @@
     },
     "Gateway": {
       "commandName": "Project",
-      "launchBrowser": true,
       "launchUrl": "api/spot",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
