@@ -23,7 +23,7 @@ namespace Web.Controllers
         {
             ModelState.Clear();
             HttpClient httpClient = new HttpClient();
-            httpClient.BaseAddress = new Uri("http://localhost:1914/");
+            httpClient.BaseAddress = new Uri("http://localhost:5011/");
             httpClient.DefaultRequestHeaders.Accept.Add(
                 new MediaTypeWithQualityHeaderValue("application/json"));
 
@@ -55,7 +55,7 @@ namespace Web.Controllers
         private async Task<BookingDTO> GetReservation(int bookingId)
         {
             HttpClient httpClient = new HttpClient();
-            httpClient.BaseAddress = new Uri("http://localhost:1914/");
+            httpClient.BaseAddress = new Uri("http://localhost:5011/");
             httpClient.DefaultRequestHeaders.Accept.Add(
                new MediaTypeWithQualityHeaderValue("application/json"));
 

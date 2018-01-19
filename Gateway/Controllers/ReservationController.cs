@@ -16,7 +16,7 @@ namespace Gateway.Controllers
     [Route("api/reservation")]
     public class ReservationController : Controller
     {
-        private ReservationEnrichmentService reservationEnrichmentService = new ReservationEnrichmentService();
+        private EnrichmentService reservationEnrichmentService = new EnrichmentService();
         // POST: api/reservation
         [HttpPost]
         public ContentResult Post([FromBody] object reservationDTO)

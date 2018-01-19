@@ -3,7 +3,7 @@
     "windowsAuthentication": false,
     "anonymousAuthentication": true,
     "iisExpress": {
-      "applicationUrl": "http://localhost:1914/",
+      "applicationUrl": "http://localhost:5011/",
       "sslPort": 0
     }
   },
@@ -18,12 +18,11 @@
     },
     "Gateway": {
       "commandName": "Project",
-      "launchBrowser": true,
       "launchUrl": "api/spot",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       },
-      "applicationUrl": "http://localhost:1915/"
+      "applicationUrl": "http://localhost:5011/"
     }
   }
 }

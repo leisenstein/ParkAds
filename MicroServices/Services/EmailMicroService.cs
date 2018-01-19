@@ -2,14 +2,15 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using Domain;
 
 namespace MicroServices.Services
 {
     public class EmailMicroService
     {
-        public void SendSimpleMessage()
+        public void SendSimpleMessage(Ad ad, Object obj)
         {
-            EmailService.SendSimpleMessage();
+            EmailService.SendSimpleMessage(ad,obj);
         }
     }
 }
