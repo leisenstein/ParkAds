@@ -5,6 +5,8 @@ using Newtonsoft.Json;
 using DataTransferObjects;
 using Gateway.Mapping;
 using Domain;
+using Microsoft.Extensions.Logging;
+using System;
 
 namespace Gateway.Controllers
 {
@@ -13,6 +15,11 @@ namespace Gateway.Controllers
     public class UserController : Controller
     {
         private UserMicroService userMicroService = new UserMicroService();
+        private readonly ILogger<UserController> _logger;
+        public UserController(ILogger<UserController> logger)
+        {
+            _logger = logger;
+        }
         // GET: api/User
         [HttpGet]
         public IEnumerable<UserDTO> Get()
@@ -29,6 +36,7 @@ namespace Gateway.Controllers
         [Route("email/{email}")]
         public UserDTO GetByEmail(string email)
         {
+            _logger.LogInformation("User login ,"+ email + DateTime.UtcNow);
             return UserMapping.MapDomainToDTOObject(userMicroService.GetByEmail(email));
         }
         
@@ -37,6 +45,7 @@ namespace Gateway.Controllers
         public ContentResult Post([FromBody] UserDTO userDTO)
         {
             User user = UserMapping.MapDTOToDomainObject(userDTO);
+            _logger.LogInformation("User created" + user.Email + DateTime.UtcNow );
             if (userMicroService.Add(user))
                 return new ContentResult()
                 {

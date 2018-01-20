@@ -11,7 +11,7 @@ namespace MicroServices.Services
         private AdService adService = new AdService();
         public Ad Get()
         {
-            return adService.Get().Result;
+            return adService.Get();//.Result;
         }
     }
 }
