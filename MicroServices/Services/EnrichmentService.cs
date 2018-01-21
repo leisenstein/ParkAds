@@ -1,32 +1,46 @@
-﻿using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
-using System.Text;
-using Domain;
+﻿using Domain;
+using MessageSender;
 using MicroServices.FactoryReservation;
 
 namespace MicroServices.Services
 {
     public class EnrichmentService
     {
-        private EmailMicroService emailMicroService = new EmailMicroService();
-        private ReservationEnrichmentService reservationEnrichmentService = new ReservationEnrichmentService();
-        private AdMicroService adMicroService = new AdMicroService();
-
-        public bool Add(object reservation)
+        public object Add(object reservation)
         {
-            if (reservationEnrichmentService.Add(reservation) == true)
+            object returnedReservation = ReservationAdded(reservation);
+            if (returnedReservation != null)
             {
-                     Ad ad = adMicroService.Get();
-                    emailMicroService.SendSimpleMessage(ad, reservation);
-                return true;
+                SendMail(GetAd(), returnedReservation);
+                return returnedReservation;
             }
-            return false;
+
+            return null;
         }
         public object Get(string id)
         {
             return ReservationFactory.Get(id);
         }
 
+        private object ReservationAdded(object reservation)
+        {
+            return ReservationFactory.Add(reservation);
+        }
+
+        private Ad GetAd()
+        {
+            AdSend adSend = new AdSend();
+            Ad ad = adSend.AdRequest();
+            adSend.CloseConnection();
+
+            return ad;
+        }
+
+        private void SendMail(Ad ad, object reservation)
+        {
+            EmailSend emailSend = new EmailSend();
+            emailSend.SendEmail(ad, reservation);
+            emailSend.CloseConnection();
+        } 
     }
 }

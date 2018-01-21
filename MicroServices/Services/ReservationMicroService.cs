@@ -4,13 +4,11 @@ using MicroServices.FactoryReservation;
 
 namespace MicroServices.Services
 {
-    public class ReservationEnrichmentService
+    public class ReservationMicroService
     {
-        private EmailMicroService emailMicroService = new EmailMicroService();
-        public bool Add(object reservation)
+        public object Add(object reservation)
         {
             return ReservationFactory.Add(reservation);
-            //emailMicroService.SendSimpleMessage();
         }
 
         public object Get(string id)
