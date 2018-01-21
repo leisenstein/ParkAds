@@ -17,7 +17,7 @@ namespace Gateway.Controllers
     [Route("api/reservation")]
     public class ReservationController : Controller
     {
-        private EnrichmentService reservationEnrichmentService = new EnrichmentService();
+        private EnrichmentService enrichmentService = new EnrichmentService();
         private readonly ILogger<AdMicroService> _logger;
         public ReservationController(ILogger<AdMicroService> logger)
         {
@@ -29,10 +29,11 @@ namespace Gateway.Controllers
         {
             object reservation = ReservationMapping.MapDTOToDomainObject(reservationDTO);
             _logger.LogInformation("Reservation created ," + DateTime.UtcNow);
-            if (reservationEnrichmentService.Add(reservation))
+            object returnedReservation = enrichmentService.Add(reservation);
+            if (returnedReservation != null)
                 return new ContentResult()
                 {
-                    Content = JsonConvert.SerializeObject(ReservationMapping.MapDomainToDTOObject(reservation)),
+                    Content = JsonConvert.SerializeObject(ReservationMapping.MapDomainToDTOObject(returnedReservation)),
                     ContentType = "application/json",
                     StatusCode = 200
                 };
@@ -49,7 +50,7 @@ namespace Gateway.Controllers
         [Route("id/{id}")]
         public object Get(string id)
         {
-            return ReservationMapping.MapDomainToDTOObject(reservationEnrichmentService.Get(id));
+            return ReservationMapping.MapDomainToDTOObject(enrichmentService.Get(id));
         }
     }
 }
