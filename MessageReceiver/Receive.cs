@@ -8,6 +8,7 @@ namespace MessageReceiver
         {
             BookingReceive reservationReceive = new BookingReceive();
             PaymentReceive paymentReceive = new PaymentReceive();
+            EmailReceive emailReceive = new EmailReceive();
         }
     }
 }

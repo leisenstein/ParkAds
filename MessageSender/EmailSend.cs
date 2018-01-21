@@ -2,6 +2,7 @@
 using System.Text;
 using Domain;
 using Newtonsoft.Json;
+using DataTransferObjects;
 
 namespace MessageSender
 {
@@ -52,21 +53,16 @@ namespace MessageSender
         public void SendEmail(Ad ad, object reservation)
         {
             PublicationAddress address = new PublicationAddress(ExchangeType.Direct, "email.exchange", "email");
-            channel.BasicPublish(address, InitializeProperties(), Encoding.UTF8.GetBytes(ConfigureMessage(ad, reservation).ToString()));
+            channel.BasicPublish(address, InitializeProperties(), Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(ConfigureMessage(ad, reservation))));
         }
 
-        private StringBuilder ConfigureMessage(Ad ad, object reservation)
-        {
-            string adString = JsonConvert.SerializeObject(ad);
-            string reservationString = JsonConvert.SerializeObject(reservation);
-            string divider = "divider";
-
-            StringBuilder stringBuilder = new StringBuilder();
-            stringBuilder.Append(adString);
-            stringBuilder.Append(divider);
-            stringBuilder.Append(reservationString);
-
-            return stringBuilder;
+        private EmailTransferObject ConfigureMessage(Ad ad, object reservation)
+        { 
+            return new EmailTransferObject
+            {
+                Ad = ad,
+                Reservation = reservation
+            };
         }
     }
 }

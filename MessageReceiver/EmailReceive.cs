@@ -1,23 +1,24 @@
 ﻿using RabbitMQ.Client;
 using System.Text;
-using Domain;
 using Newtonsoft.Json;
 using RabbitMQ.Client.Events;
-using System;
 using DataAccess.ExternalServices;
+using DataTransferObjects;
+using MicroServices.Services;
 
 namespace MessageReceiver
 {
-    public class EmailReceiver
+    public class EmailReceive
     {
         private ConnectionFactory connectionFactory;
         private IConnection connection;
         private IModel channel;
         private EventingBasicConsumer consumer;
-        public EmailReceiver()
+        public EmailReceive()
         {
             InitializeConnection();
-
+            InitializeInfrastructure();
+            InitializeConsumer();
         }
 
         private void InitializeConnection()
@@ -43,18 +44,14 @@ namespace MessageReceiver
             consumer.Received += (model, ea) =>
             {
                 var body = ea.Body;
-                var message = Encoding.UTF8.GetString(body);
-                string[] messageStringParts = SplitString(message);
-                EmailService.SendSimpleMessage(messageStringParts[0], messageStringParts[1]);
+                string message = Encoding.UTF8.GetString(body);
+                EmailMicroService emailMicroService = new EmailMicroService();
+                emailMicroService.SendSimpleMessage(JsonConvert.DeserializeObject<EmailTransferObject>(message));
 
                 channel.BasicAck(deliveryTag: ea.DeliveryTag, multiple: false);
             };
             channel.BasicConsume("email.queue", false, consumer);
         }
 
-        private string[] SplitString(string message)
-        {
-            return message.Split(new string[] { "divider" }, StringSplitOptions.None);
-        }
     }
 }
