@@ -1,5 +1,5 @@
 ﻿using Domain;
-using MicroServices.FactoryReservation;
+using MicroServices.Services;
 using Newtonsoft.Json;
 using RabbitMQ.Client;
 using RabbitMQ.Client.Events;
@@ -7,16 +7,14 @@ using System.Text;
 
 namespace MessageReceiver
 {
-    public class BookingReceive
+    public class AdReceive
     {
         private ConnectionFactory connectionFactory;
         private IConnection connection;
         private IModel channel;
-        public BookingReceive()
+        public AdReceive()
         {
             CreateConnection();
-            InitializeInfrastructure();
-            InitializeConsumer();
         }
 
         private void CreateConnection()
@@ -28,10 +26,12 @@ namespace MessageReceiver
                 Password = "guest"
             };
 
-            connection = connectionFactory.CreateConnection();
+            InitializeInfrastructure();
+            InitializeConsumer();
         }
         private void InitializeInfrastructure()
         {
+            connection = connectionFactory.CreateConnection();
             channel = connection.CreateModel();
             channel.BasicQos(0, 1, false);
         }
@@ -46,18 +46,18 @@ namespace MessageReceiver
                 string message = Encoding.UTF8.GetString(basicDeliveryEventArgs.Body);
                 channel.BasicAck(basicDeliveryEventArgs.DeliveryTag, false);
 
-                // Send message go booking microservice
-                BookingMicroService bookingMicroService = new BookingMicroService();
-                Booking booking = bookingMicroService.Add(JsonConvert.DeserializeObject<Booking>(message));
+                // Get add from ad microservice
+                AdMicroService adMicroService = new AdMicroService();
+                Ad ad = adMicroService.Get();
 
                 // Send response message
                 IBasicProperties replyBasicProperties = channel.CreateBasicProperties();
                 replyBasicProperties.CorrelationId = basicDeliveryEventArgs.BasicProperties.CorrelationId;
-                byte[] responseBytes = Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(booking));
+                byte[] responseBytes = Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(ad));
                 channel.BasicPublish("", basicDeliveryEventArgs.BasicProperties.ReplyTo, replyBasicProperties, responseBytes);
             };
 
-            channel.BasicConsume("booking.queue", false, eventingBasicConsumer);
+            channel.BasicConsume("ad.queue", false, eventingBasicConsumer);
         }
     }
 }

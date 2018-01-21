@@ -6,15 +6,12 @@ namespace MicroServices.Services
 {
     public class EnrichmentService
     {
-        private AdMicroService adMicroService = new AdMicroService();
-
         public object Add(object reservation)
         {
             object returnedReservation = ReservationAdded(reservation);
             if (returnedReservation != null)
             {
-                Ad ad = GetAd();
-                SendMail(ad, returnedReservation);
+                SendMail(GetAd(), returnedReservation);
                 return returnedReservation;
             }
 
@@ -30,7 +27,14 @@ namespace MicroServices.Services
             return ReservationFactory.Add(reservation);
         }
 
-        private Ad GetAd() => adMicroService.Get();
+        private Ad GetAd()
+        {
+            AdSend adSend = new AdSend();
+            Ad ad = adSend.AdRequest();
+            adSend.CloseConnection();
+
+            return ad;
+        }
 
         private void SendMail(Ad ad, object reservation)
         {
