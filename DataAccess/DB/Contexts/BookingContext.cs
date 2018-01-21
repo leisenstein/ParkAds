@@ -12,7 +12,7 @@ namespace DataAccess.DB.Contexts
         }
         protected override void OnConfiguring(DbContextOptionsBuilder options)
         {
-            options.UseSqlServer(@"Data Source =LAPTOP-JHBMA0II; Initial Catalog = ParkAdsBookings; Integrated Security = True; Connect Timeout = 30;");
+            options.UseSqlServer(@"Data Source =.\GKARAVASILEV; Initial Catalog = ParkAdsBookings; Integrated Security = True; Connect Timeout = 30;");
         }
 
         public virtual DbSet<Booking> Bookings { get; set; }

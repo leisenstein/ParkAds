@@ -1,48 +1,52 @@
 ﻿using Domain;
+using MessageSender;
 using System;
 using System.Text.RegularExpressions;
+using Newtonsoft.Json;
 
 namespace MicroServices.FactoryReservation
 {
     public  class ReservationFactory
     {
-        public static bool Add(object reservation)
+        public static object Add(object reservation)
         {
-            IReservation IReservation = null;
-            var asd = reservation.GetType().ToString();
             if(reservation.GetType().ToString().Equals("Domain.Payment"))
             {
-                IReservation = new PaymentMicroService();
+                PaymentSend paymentSend = new PaymentSend();
+                string paymentResponse = paymentSend.SendMessage(JsonConvert.SerializeObject(reservation));
+                paymentSend.CloseConnection();
 
-                Payment payment = (Payment)reservation;
+                return JsonConvert.DeserializeObject<Payment>(paymentResponse);
 
-                if (IReservation.Add(payment))
-                    if (PayBooking(payment.Booking))
-                        return true;
+                //PaymentMicroService paymentMicroService = new PaymentMicroService();
 
-                return false;
+                //Payment payment = (Payment)reservation;
+
+                //if (paymentMicroService.Add(payment))
+                //    if (PayBooking(payment.Booking))
+                //        return true;
             }
             else
             {
-                IReservation = new BookingMicroService();
+                BookingSend bookingSend = new BookingSend();
+                string bookingResponse = bookingSend.SendMessage(JsonConvert.SerializeObject(reservation));
+                bookingSend.CloseConnection();
 
-                Booking booking = (Booking)reservation;
-
-                return IReservation.Add(booking);
+                return JsonConvert.DeserializeObject<Booking>(bookingResponse);
             }
         }
 
         public static object Get(string reservationId)
         {
             int id = ExtractNumericPartOfId(reservationId);
-            IReservation IReservation = null;
+            object IReservation = null;
 
             if (reservationId.Contains("booking"))
                 IReservation = new BookingMicroService();
             else
                 IReservation = new PaymentMicroService();
 
-            return IReservation.Get(id);
+            return IReservation;//IReservation.Get(id);
         }
 
         private static bool PayBooking(Booking booking)

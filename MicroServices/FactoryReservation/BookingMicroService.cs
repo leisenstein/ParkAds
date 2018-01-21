@@ -8,14 +8,13 @@ using System.Text;
 
 namespace MicroServices.FactoryReservation
 {
-    public sealed class BookingMicroService : IReservation
+    public sealed class BookingMicroService
     {
         private BookingUnitOfWork bookingUnitOfWork = new BookingUnitOfWork(new BookingContext());
-        public bool Add(object reservation)
+        public Booking Add(Booking booking)
         {
-            Booking booking = Cast(reservation);
             bookingUnitOfWork.Repository.Add(booking);
-            return bookingUnitOfWork.Complete() > 0;
+            return bookingUnitOfWork.Complete() > 0 ? booking : null;
         }
 
         public object Get(int id)
