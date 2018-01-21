@@ -23,7 +23,7 @@ namespace DataAccess.ExternalServices
             if (cache.Count == 0)
             {
                 Ad ads = GetFromSource().Result;
-                while (ads.ImageData.Length < 100)
+                while (ads.ImageData != null && ads.ImageData.Length < 100)
                     ads = GetFromSource().Result;
                 cache.Set("ad", ads, new MemoryCacheEntryOptions().SetAbsoluteExpiration(TimeSpan.FromMinutes(2)));
                 Ad ad = (Ad)cache.Get("ad");
