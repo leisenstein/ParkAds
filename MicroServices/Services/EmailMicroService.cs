@@ -1,16 +1,13 @@
 ﻿using DataAccess.ExternalServices;
-using System;
-using System.Collections.Generic;
-using System.Text;
-using Domain;
+using DataTransferObjects;
 
 namespace MicroServices.Services
 {
     public class EmailMicroService
     {
-        public void SendSimpleMessage(Ad ad, Object obj)
+        public void SendSimpleMessage(EmailTransferObject emailTransferObject)
         {
-            EmailService.SendSimpleMessage(ad,obj);
+            EmailService.SendSimpleMessage(emailTransferObject);
         }
     }
 }

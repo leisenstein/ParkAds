@@ -4,15 +4,14 @@ using DataAccess.DB.Contexts;
 
 namespace MicroServices.FactoryReservation
 {
-    public sealed class PaymentMicroService : IReservation
+    public sealed class PaymentMicroService
     {
         private PaymentUnitOfWork paymentUnitOfWork = new PaymentUnitOfWork(new PaymentContext());
-        public bool Add(object reservation)
+        public Payment Add(Payment payment)
         {
-            Payment payment = (Payment)reservation;
             payment.Booking.IsPayed = true;
             paymentUnitOfWork.Repository.Add(payment);
-            return paymentUnitOfWork.Complete() > 0;
+            return paymentUnitOfWork.Complete() > 0 ? payment : null;
         }
 
         public object Get(int id)

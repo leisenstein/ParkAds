@@ -15,6 +15,10 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Domain", "Domain\Domain.csp
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Web", "Web\Web.csproj", "{3069FFB0-7DAB-48EB-BDE1-2F427265E604}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MessageSender", "MessageSender\MessageSender.csproj", "{9CAB151B-5B55-402A-9202-65A8FC0E470C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MessageReceiver", "MessageReceiver\MessageReceiver.csproj", "{7ABD674C-299A-4832-81AA-F5E318930F07}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -45,6 +49,14 @@ Global
 		{3069FFB0-7DAB-48EB-BDE1-2F427265E604}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3069FFB0-7DAB-48EB-BDE1-2F427265E604}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3069FFB0-7DAB-48EB-BDE1-2F427265E604}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9CAB151B-5B55-402A-9202-65A8FC0E470C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9CAB151B-5B55-402A-9202-65A8FC0E470C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9CAB151B-5B55-402A-9202-65A8FC0E470C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9CAB151B-5B55-402A-9202-65A8FC0E470C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7ABD674C-299A-4832-81AA-F5E318930F07}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7ABD674C-299A-4832-81AA-F5E318930F07}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7ABD674C-299A-4832-81AA-F5E318930F07}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7ABD674C-299A-4832-81AA-F5E318930F07}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
